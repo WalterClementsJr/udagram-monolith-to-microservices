@@ -1,4 +1,4 @@
-import {Router, Request, Response} from 'express';
+import {Request, Response, Router} from 'express';
 
 import {User} from '../models/User';
 import * as c from '../../../../config/config';
@@ -8,7 +8,6 @@ import * as jwt from 'jsonwebtoken';
 import {NextFunction} from 'connect';
 
 import * as EmailValidator from 'email-validator';
-import {config} from 'bluebird';
 
 const router: Router = Router();
 
@@ -47,10 +46,10 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
 }
 
 router.get('/verification',
-    requireAuth,
-    async (req: Request, res: Response) => {
-      return res.status(200).send({auth: true, message: 'Authenticated.'});
-    });
+  requireAuth,
+  async (req: Request, res: Response) => {
+    return res.status(200).send({auth: true, message: 'Authenticated.'});
+  });
 
 router.post('/login', async (req: Request, res: Response) => {
   const email = req.body.email;
