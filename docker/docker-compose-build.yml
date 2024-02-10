@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  reverseproxy:
+    build:
+      context: ../udagram-reverseproxy
+    image: walterclementsjr/udagram-reverseproxy
+  api-user:
+    build:
+      context: ../udagram-api-user
+    image: walterclementsjr/udagram-api-user
+  api-feed:
+    build:
+      context: ../udagram-api-feed
+    image: walterclementsjr/udagram-api-feed
+  frontend:
+    build:
+      context: ../udagram-frontend
+      args:
+        - BUILD_ENV=development
+    image: walterclementsjr/udagram-frontend
