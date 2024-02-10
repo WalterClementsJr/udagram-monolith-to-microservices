@@ -3,8 +3,8 @@ import {config} from './config/config';
 
 
 // Configure AWS
-const credentials = new AWS.SharedIniFileCredentials({profile: config.aws_profile});
-AWS.config.credentials = credentials;
+// const credentials = new AWS.SharedIniFileCredentials({profile: config.aws_profile});
+// AWS.config.credentials = credentials;
 
 export const s3 = new AWS.S3({
   signatureVersion: 'v4',
@@ -24,10 +24,10 @@ export function getGetSignedUrl( key: string ): string {
 }
 
 // Generates an AWS signed URL for uploading objects
-export function getPutSignedUrl( key: string ): string {
-  const signedUrlExpireSeconds = 60 * 5;
+export async function getPutSignedUrl(key: string): Promise<string> {
+  const signedUrlExpireSeconds = 300;
 
-  return s3.getSignedUrl('putObject', {
+  return s3.getSignedUrlPromise('putObject', {
     Bucket: config.aws_media_bucket,
     Key: key,
     Expires: signedUrlExpireSeconds,

@@ -1,5 +1,5 @@
 import cors from 'cors';
-import express from 'express';
+import express, {Request} from 'express';
 import {sequelize} from './sequelize';
 
 import {IndexRouter} from './controllers/v0/index.router';
@@ -8,6 +8,16 @@ import bodyParser from 'body-parser';
 import {config} from './config/config';
 import {V0_FEED_MODELS, V0_USER_MODELS} from './controllers/v0/model.index';
 
+import 'dotenv/config';
+import {v4 as uuid} from 'uuid';
+
+declare global {
+  namespace Express {
+    interface Request {
+      id: string
+    }
+  }
+}
 
 (async () => {
   await sequelize.addModels(V0_FEED_MODELS);
@@ -20,6 +30,15 @@ import {V0_FEED_MODELS, V0_USER_MODELS} from './controllers/v0/model.index';
   const port = process.env.PORT || 8080;
 
   app.use(bodyParser.json());
+
+  // add request id
+  app.use((req: any, res: any, next: any) => {
+    req.id = uuid();
+    res.header('X-Request-Id', req.id);
+
+    console.debug(req.id, req.method, req.url);
+    return next();
+  });
 
   // We set the CORS origin to * so that we don't need to
   // worry about the complexities of CORS this lesson. It's
@@ -38,14 +57,14 @@ import {V0_FEED_MODELS, V0_USER_MODELS} from './controllers/v0/model.index';
   app.use('/api/v0/', IndexRouter);
 
   // Root URI call
-  app.get( '/', async ( req, res ) => {
-    res.send( '/api/v0/' );
-  } );
+  app.get('/', async (req, res) => {
+    res.send('/api/v0/');
+  });
 
 
   // Start the Server
-  app.listen( port, () => {
-    console.log( `server running ${config.url}` );
-    console.log( `press CTRL+C to stop server` );
-  } );
+  app.listen(port, () => {
+    console.log(`server running ${config.url}`);
+    console.log(`press CTRL+C to stop server`);
+  });
 })();

@@ -34,6 +34,8 @@ router.get('/', async (req: Request, res: Response) => {
       item.url = AWS.getGetSignedUrl(item.url);
     }
   });
+
+  console.debug(req["id"], "findAndCountAll", items);
   res.send(items);
 });
 
@@ -49,8 +51,16 @@ router.get('/:id',
 router.get('/signed-url/:fileName',
     requireAuth,
     async (req: Request, res: Response) => {
+      console.debug(req.id, "enter signedUrl");
+
       const {fileName} = req.params;
-      const url = AWS.getPutSignedUrl(fileName);
+      const url = await AWS
+        .getPutSignedUrl(fileName)
+        .catch(err => {
+          console.error(err);
+      });
+
+      console.debug(req.id, "signedUrl", url);
       res.status(201).send({url: url});
     });
 
@@ -77,6 +87,8 @@ router.post('/',
       const savedItem = await item.save();
 
       savedItem.url = AWS.getGetSignedUrl(savedItem.url);
+      console.debug(req.id, "savedItem", savedItem);
+
       res.status(201).send(savedItem);
     });
 
