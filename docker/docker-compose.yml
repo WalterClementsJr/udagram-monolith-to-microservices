@@ -21,7 +21,7 @@ services:
       AWS_REGION: $AWS_REGION
       AWS_BUCKET: $AWS_BUCKET
       JWT_SECRET: $JWT_SECRET
-      URL: "http://localhost:8100"
+      URL: $URL
   api-feed:
     image: walterclementsjr/udagram-api-feed:latest
     depends_on:
@@ -34,7 +34,7 @@ services:
       AWS_REGION: $AWS_REGION
       AWS_BUCKET: $AWS_BUCKET
       JWT_SECRET: $JWT_SECRET
-      URL: "http://localhost:8100"
+      URL: $URL
   frontend:
     image: walterclementsjr/udagram-frontend:latest
     ports:
