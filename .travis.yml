@@ -14,8 +14,10 @@ install:
   - docker-compose -f docker/docker-compose-build.yml build --parallel
 
 deploy:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker-compose -f ./docker/docker-compose-build.yml push
+  - provider: script
+    script: bash ./docker/push-images.sh
+    on:
+      branch: master
   - provider: script
     script: bash ./k8s/script_deploy.sh
     on:
