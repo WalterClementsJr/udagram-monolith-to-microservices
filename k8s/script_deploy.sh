@@ -2,13 +2,7 @@
 
 set -e
 
-# get script's location
-ls
-pwd
-
-#cd k8s
-
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+cd k8s
 
 if [ -z "$KUBECONFIG" ]
 then
@@ -21,16 +15,16 @@ then
     kubectl config use-context kubernetes-admin@udagram
 fi
 
-secret=`envsubst '$JWT_SECRET $POSTGRES_USERNAME $POSTGRES_PASSWORD' < $DIR/env-secret.yml`
-echo "secret: $secret" | kubectl apply -f -
+secret=$(envsubst '$JWT_SECRET $POSTGRES_USERNAME $POSTGRES_PASSWORD' < env-secret.yml)
+echo "secret: $secret"# | kubectl apply -f -
 
-configmap=`envsubst '$AWS_BUCKET $AWS_PROFILE $AWS_REGION $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY $POSTGRES_HOST $POSTGRES_DB $APP_URL' < $DIR/env-configmap.yml`
-echo "configmap: $configmap" | kubectl apply -f -
+configmap=$(envsubst '$AWS_BUCKET $AWS_PROFILE $AWS_REGION $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY $POSTGRES_HOST $POSTGRES_DB $APP_URL' < env-configmap.yml)
+echo "configmap: $configmap"# | kubectl apply -f -
 
-awsSecret=`envsubst '$AWS_CREDENTIALS' < aws-secret.yml`
-echo "awsSecret: $awsSecret" | kubectl apply -f -
+awsSecret=$(envsubst '$AWS_CREDENTIALS' < aws-secret.yml)
+echo "awsSecret: $awsSecret"# | kubectl apply -f -
 
-kubectl apply -f $DIR/deployment-api-feed.yml
-kubectl apply -f $DIR/deployment-api-user.yml
-kubectl apply -f $DIR/deployment-reverseproxy.yml
-kubectl apply -f $DIR/deployment-frontend.yml
+#kubectl apply -f deployment-api-feed.yml
+#kubectl apply -f deployment-api-user.yml
+#kubectl apply -f deployment-reverseproxy.yml
+#kubectl apply -f deployment-frontend.yml
