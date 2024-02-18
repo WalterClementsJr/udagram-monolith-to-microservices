@@ -1,6 +1,6 @@
 variable "cluster_name" {
   description = "Name of the cluster"
-  default = "udacity-udagram"
+  default = "udagram"
 }
 
 variable "worker_os" {

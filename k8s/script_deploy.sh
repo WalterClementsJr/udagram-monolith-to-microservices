@@ -21,11 +21,11 @@ then
     kubectl config use-context kubernetes-admin@udagram
 fi
 
-configmap=`envsubst '$AWS_BUCKET $AWS_PROFILE $AWS_REGION $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY $POSTGRES_HOST $POSTGRES_DB $APP_URL' < $DIR/env-configmap.yml`
-echo "configmap: $configmap" | kubectl apply -f -
-
 secret=`envsubst '$JWT_SECRET $POSTGRES_USERNAME $POSTGRES_PASSWORD' < $DIR/env-secret.yml`
 echo "secret: $secret" | kubectl apply -f -
+
+configmap=`envsubst '$AWS_BUCKET $AWS_PROFILE $AWS_REGION $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY $POSTGRES_HOST $POSTGRES_DB $APP_URL' < $DIR/env-configmap.yml`
+echo "configmap: $configmap" | kubectl apply -f -
 
 awsSecret=`envsubst '$AWS_CREDENTIALS' < aws-secret.yml`
 echo "awsSecret: $awsSecret" | kubectl apply -f -
