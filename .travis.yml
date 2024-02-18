@@ -17,8 +17,8 @@ deploy:
   - provider: script
     script: bash ./docker/push-images.sh
     on:
-      branch: master
+      branch: main
   - provider: script
     script: bash ./k8s/script_deploy.sh
     on:
-      branch: master
+      branch: main
