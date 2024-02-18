@@ -1,5 +1,5 @@
 # This file is used for convenience of local development.
-export POSTGRES_USERNAME=admin
+export POSTGRES_USERNAME=postgres
 export POSTGRES_PASSWORD=admin2024
 export POSTGRES_HOST=localhost
 export POSTGRES_DB=postgres
