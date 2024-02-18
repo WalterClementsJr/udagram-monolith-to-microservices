@@ -3,6 +3,10 @@
 set -e
 
 # get script's location
+ls
+pwd
+
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 if [ -z "$KUBECONFIG" ]
@@ -16,10 +20,10 @@ then
     kubectl config use-context kubernetes-admin@udagram
 fi
 
-configmap=`envsubst '$JWT_SECRET $POSTGRES_USERNAME $POSTGRES_PASSWORD' < env-configmap.yml`
+configmap=`envsubst '$JWT_SECRET $POSTGRES_USERNAME $POSTGRES_PASSWORD' < $DIR/env-configmap.yml`
 echo "configmap: $configmap" | kubectl apply -f -
 
-secret=`envsubst '$JWT_SECRET $POSTGRES_USERNAME $POSTGRES_PASSWORD' < env-secret.yml`
+secret=`envsubst '$JWT_SECRET $POSTGRES_USERNAME $POSTGRES_PASSWORD' < $DIR/env-secret.yml`
 echo "secret: $secret" | kubectl apply -f -
 
 awsSecret=`envsubst '$AWS_CREDENTIALS' < aws-secret.yml`
