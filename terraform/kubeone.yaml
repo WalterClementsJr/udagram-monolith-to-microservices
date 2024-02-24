@@ -1,0 +1,7 @@
+apiVersion: kubeone.k8c.io/v1beta2
+kind: KubeOneCluster
+name: udagram
+versions:
+  kubernetes: 1.26.0
+cloudProvider:
+  aws: {}

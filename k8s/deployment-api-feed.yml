@@ -26,11 +26,6 @@ spec:
               memory: "1.5Gi"
               cpu: "500m"
           env:
-            - name: URL
-              valueFrom:
-                configMapKeyRef:
-                  name: env-config
-                  key: URL
             - name: AWS_BUCKET
               valueFrom:
                 configMapKeyRef:

@@ -2,25 +2,24 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: frontend
+    app.kubernetes.io/name: frontend
   name: frontend
 spec:
   selector:
     matchLabels:
-      app: frontend
+      app.kubernetes.io/name: frontend
   replicas: 1
   template:
     metadata:
       labels:
-        app: frontend
-        api: external
+        app.kubernetes.io/name: frontend
     spec:
       containers:
         - image: walterclementsjr/udagram-frontend
           name: frontend
           imagePullPolicy: Always
           ports:
-            - containerPort: 8100
+            - containerPort: 80
           resources:
             requests:
               memory: "64Mi"
