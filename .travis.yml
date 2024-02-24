@@ -9,7 +9,6 @@ before_install:
   - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
   - chmod +x ./kubectl
   - sudo mv ./kubectl /usr/local/bin/kubectl
-  - kubectl version
 
 install:
   - docker-compose -f docker/docker-compose-build.yml build --parallel
@@ -19,7 +18,3 @@ deploy:
     script: bash ./docker/push-images.sh
     on:
       branch: main
-#  - provider: script
-#    script: bash ./k8s/script_deploy.sh
-#    on:
-#      branch: main

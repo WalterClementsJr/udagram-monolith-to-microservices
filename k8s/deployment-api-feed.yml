@@ -20,10 +20,10 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              memory: "64Mi"
+              memory: "1Gi"
               cpu: "250m"
             limits:
-              memory: "1024Mi"
+              memory: "1.5Gi"
               cpu: "500m"
           env:
             - name: URL
@@ -36,19 +36,14 @@ spec:
                 configMapKeyRef:
                   name: env-config
                   key: AWS_BUCKET
-            - name: AWS_PROFILE
+            - name: AWS_ACCESS_KEY
               valueFrom:
                 configMapKeyRef:
                   name: env-config
-                  key: AWS_PROFILE
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: env-config
-                  key: AWS_ACCESS_KEY_ID
+                  key: AWS_ACCESS_KEY
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
-                secretKeyRef:
+                configMapKeyRef:
                   name: env-config
                   key: AWS_SECRET_ACCESS_KEY
             - name: AWS_REGION
@@ -56,11 +51,6 @@ spec:
                 configMapKeyRef:
                   name: env-config
                   key: AWS_REGION
-            - name: JWT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: env-secret
-                  key: JWT_SECRET
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
@@ -71,6 +61,13 @@ spec:
                 configMapKeyRef:
                   name: env-config
                   key: POSTGRES_HOST
+            - name: NODE_OPTIONS
+              value: "--max-old-space-size=8192"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: JWT_SECRET
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
