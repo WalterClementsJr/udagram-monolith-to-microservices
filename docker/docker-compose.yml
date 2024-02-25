@@ -12,6 +12,8 @@ services:
 
   api-user:
     image: walterclementsjr/udagram-api-user:latest
+    ports:
+      - "8081:8081"
     depends_on:
       - postgres
     environment:
@@ -26,6 +28,8 @@ services:
 
   api-feed:
     image: walterclementsjr/udagram-api-feed:latest
+    ports:
+      - "8082:8082"
     depends_on:
       - postgres
     environment:
@@ -40,7 +44,7 @@ services:
   frontend:
     image: walterclementsjr/udagram-frontend:latest
     ports:
-      - "80:80"
+      - "8080:80"
 
   postgres:
     container_name: db
