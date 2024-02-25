@@ -2,13 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service: reverseproxy
+    app.kubernetes.io/name: reverseproxy
   name: reverseproxy
 spec:
-  type: LoadBalancer    
+  type: LoadBalancer
   ports:
-  - name: "8080"
-    port: 8080
-    targetPort: 8080
+    - port: 80
+      targetPort: 80
+      protocol: TCP
   selector:
-    service: reverseproxy
+    app.kubernetes.io/name: reverseproxy

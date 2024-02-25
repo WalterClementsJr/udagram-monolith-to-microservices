@@ -26,7 +26,7 @@ declare global {
   await sequelize.sync();
 
   const app = express();
-  const port = process.env.PORT || 8081;
+  const port = 8081;
 
   app.use(bodyParser.json());
 
@@ -62,7 +62,7 @@ declare global {
 
 
   // Start the Server
-  app.listen(port, () => {
+  app.listen(port, '0.0.0.0', () => {
     console.log(`server running ${config.url}`);
     console.log(`press CTRL+C to stop server`);
   });

@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: api-feed
+    app.kubernetes.io/name: api-feed
   name: api-feed
 spec:
   selector:
     matchLabels:
-      app: api-feed
+      app.kubernetes.io/name: api-feed
   replicas: 1
   template:
     metadata:
       labels:
-        app: api-feed
+        app.kubernetes.io/name: api-feed
     spec:
       containers:
         - image: walterclementsjr/udagram-api-feed
@@ -58,6 +58,8 @@ spec:
                   key: POSTGRES_HOST
             - name: NODE_OPTIONS
               value: "--max-old-space-size=8192"
+            - name: URL
+              value: "localhost:8100"
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:

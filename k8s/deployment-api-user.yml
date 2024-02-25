@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: api-user
+    app.kubernetes.io/name: api-user
   name: api-user
 spec:
   selector:
     matchLabels:
-      app: api-user
+      app.kubernetes.io/name: api-user
   replicas: 1
   template:
     metadata:
       labels:
-        app: api-user
+        app.kubernetes.io/name: api-user
     spec:
       containers:
         - image: walterclementsjr/udagram-api-user
@@ -36,7 +36,8 @@ spec:
                 configMapKeyRef:
                   name: env-config
                   key: POSTGRES_HOST
-
+            - name: URL
+              value: "localhost:8100" # i'm lazy
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:

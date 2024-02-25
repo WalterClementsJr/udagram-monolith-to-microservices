@@ -2,11 +2,9 @@
 
 set -e
 
-cd ./k8s/
-
-if [ -z "$KUBECONFIG" ]
-then
-    echo "kubectl config start"
+#if [ -z "$KUBECONFIG" ]
+#then
+#    echo "kubectl config start"
 
 #    echo ${KUBERNETES_CA} | base64 --decode > udagram-ca.pem
 #    echo ${KUBERNETES_CLIENT_CA} | base64 --decode > udagram-client-ca.pem
@@ -16,21 +14,15 @@ then
 #    kubectl config set-context kubernetes-admin@udagram --cluster=udagram --namespace=default --user=kubernetes-admin
 #    kubectl config use-context kubernetes-admin@udagram
 
-    echo "kubectl config completed"
-fi
+#    echo "kubectl config completed"
+#fi
 
 echo "kubectl apply steps start"
 
-#awsSecret=$(envsubst '$AWS_CREDENTIALS' < aws-secret.yml)
-#echo "done"
-#echo "$awsSecret" | kubectl apply -f -
-
-configmap=$(envsubst '$AWS_BUCKET $AWS_PROFILE $AWS_REGION $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY $POSTGRES_HOST $POSTGRES_DB $URL' < env-configmap.yml)
-echo "done"
+configmap=$(envsubst '$AWS_BUCKET $AWS_PROFILE $AWS_REGION $AWS_ACCESS_KEY $AWS_SECRET_ACCESS_KEY $POSTGRES_HOST $POSTGRES_DB $URL' < env-configmap.yml)
 echo "$configmap" | kubectl apply -f -
 
 secret=$(envsubst '$JWT_SECRET $POSTGRES_USERNAME $POSTGRES_PASSWORD' < env-secret.yml)
-echo "done"
 echo "$secret" | kubectl apply -f -
 
 echo "kubectl apply steps ok"
