@@ -35,7 +35,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: env-config
-                  key: AWS_ACCESS_KEY
+                  key: AWS_ACCESS_KEY_ID
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 configMapKeyRef:
@@ -45,7 +45,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: env-config
-                  key: AWS_REGION
+                  key: AWS_DEFAULT_REGION
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:

@@ -19,7 +19,7 @@ set -e
 
 echo "kubectl apply steps start"
 
-configmap=$(envsubst '$AWS_BUCKET $AWS_PROFILE $AWS_REGION $AWS_ACCESS_KEY $AWS_SECRET_ACCESS_KEY $POSTGRES_HOST $POSTGRES_DB $URL' < env-configmap.yml)
+configmap=$(envsubst '$AWS_BUCKET $AWS_DEFAULT_REGION $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY $POSTGRES_HOST $POSTGRES_DB' < env-configmap.yml)
 echo "$configmap" | kubectl apply -f -
 
 secret=$(envsubst '$JWT_SECRET $POSTGRES_USERNAME $POSTGRES_PASSWORD' < env-secret.yml)
